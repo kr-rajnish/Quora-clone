@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import "./Login.css";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
 import { auth, provider } from "../../firebase";
 import { ArrowForwardIos } from "@mui/icons-material";
 
@@ -12,60 +7,57 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-   const signIn = async () => {
-     try {
-       await signInWithPopup(auth, provider);
-       console.log(auth.currentUser);
-     } catch (e) {
-       alert(e.message);
-     }
-   };
-
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth);
-    } catch (err) {
-      alert(err);
-    }
-    setEmail("");
-    setPassword("");
+  const signIn = () => {
+    auth.signInWithPopup(provider).catch((e) => {
+      alert(e.message);
+    });
   };
 
-  const registerSignIn = async (e) => {
+  const handleSignIn = (e) => {
     e.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      if (auth) {
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth) => {
         console.log(auth);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-    setEmail("");
-    setPassword("");
+      })
+      .catch((e) => alert(e.message));
   };
 
+  const registerSignIn = (e) => {
+    e.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        if (auth) {
+          console.log(auth);
+        }
+      })
+      .catch((e) => alert(e.message));
+  };
   return (
     <div className="login">
       <div className="login__container">
         <div className="login__logo">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Quora_logo_2015.svg/250px-Quora_logo_2015.svg.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjGZVurt8r1so9YWuK5gV3pIVuhxgzg-dvUhm4bdcUAaMZPNpu9PI9KzWPGPDB7HqUHw&usqp=CAU"
             alt=""
           />
         </div>
         <div className="login__desc">
           <p>A Place to Share knowledge and better understand the world</p>
-    
+          <p style={{ color: "royalblue", fontSize: "25px" }}>
+            HandCrafted with ❤️ by{" "}
+          </p>
+          <h3>Clone by Rajnish</h3>
         </div>
         <div className="login__auth">
           <div className="login__authOptions">
             <div className="login__authOption">
               <img
                 className="login__googleAuth"
-                src="https://media-public.canva.com/MADnBiAubGA/3/screen.svg"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
                 alt=""
               />
               <p onClick={signIn}>Continue With Google</p>
@@ -73,7 +65,7 @@ function Login() {
             <div className="login__authOption">
               <img
                 className="login__googleAuth"
-                src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo-500x350.png"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlIysFVGl5bEj631MSkmFNh5exQMNL3sWPyg&usqp=CAU"
                 alt=""
               />
               <span>Continue With Facebook</span>
@@ -137,7 +129,7 @@ function Login() {
           <p>Privacy</p>
           <p>Terms</p>
           <p>Contact</p>
-          <p>&copy; Quora clone Inc. 2023</p>
+          <p>&copy; Quora Fake Inc. 2021</p>
         </div>
       </div>
     </div>

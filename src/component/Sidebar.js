@@ -1,10 +1,10 @@
-import React from "react";
-import SidebarOptions from "./SidebarOptions";
-import "../Css/Sidebar.css";
+import React from 'react';
+import SidebarOptions from './SidebarOptions';
+import "../css/Sidebar.css";
 
-function Sidebar() {
+const Sidebar = () => {
   return (
-    <div className="sidebar">
+    <div className='sidebar'>
       <SidebarOptions />
     </div>
   );
