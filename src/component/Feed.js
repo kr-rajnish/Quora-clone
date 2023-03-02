@@ -1,40 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import '../css/Feed.css'
-import db from '../firebase'
-import Post from './Post'
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
-import QuoraBox from './QuoraBox'
- 
-function Feed() {
-  const [posts, setPosts] = useState([])
+import React, { useEffect, useState } from 'react';
+import "../css/Feed.css";
+import Post from './Post';
+import QuoraBox from './QuoraBox';
+import db from '../firebase';
+
+const Feed = () => {
+  const [posts, setPosts]= useState([])
+
   useEffect(() => {
-    const q = query(collection(db, "questions"), orderBy("timestamp", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      setPosts(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          questions: doc.data(),
-        }))
-      );
-    });
-    return () => unsubscribe();
-  }, []);
-  console.log(posts)
+    db.collection('questions').orderBy('timestamp', 'desc').onSnapshot(snapshot => 
+      setPosts(snapshot.docs.map((doc) => ({
+        id: doc.id,
+        question: doc.data(),
+      }))
+      ))
+  }, [])
   return (
-    <div className="feed">
+    <div className='feed'>
       <QuoraBox />
-      {posts.map(({ id, questions }) => (
+      {
+      posts.map(({id, question})=>(
         <Post
-          key={id}
-          Id={id}
-          image={questions.imageUrl ? questions.imageUrl : null}
-          question={questions.question}
-          timestamp={questions.timestamp}
-          quoraUser={questions.user}
+        key={id}
+        id={id}
+        image={question.imageUrl}
+        question={question.questions}
+        timestamp={question.timestamp}
+        quoraUser={question.user}
+        
         />
-      ))}
+      ))
+    }
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
     </div>
   );
 }
 
-export default Feed
+export default Feed;
