@@ -1,31 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-// const initialState = {
-//   value: 0,
-//   status: 'idle',
-// };
+import { createSlice } from "@reduxjs/toolkit";
 
 export const questionSlice = createSlice({
   name: "question",
-  initialState:{
+  initialState: {
     questionId: null,
-    questionName:null
+    questionName: null,
   },
-    
-  
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     setQuestionInfo: (state, action) => {
-      
-      state.questionId = action.payload.questionId
-      state.questionName = action.payload.questionName
+      state.questionId = action.payload.questionId;
+      state.questionName = action.payload.questionName;
     },
-   },
- });
+  },
+});
 
- export const { setQuestionInfo } = questionSlice.actions;
+export const { setQuestionInfo } = questionSlice.actions;
 
- export const selectQuestionId = (state) => state.question.questionId;
- export const selectQuestionName = (state) => state.question.questionName;
- 
- export default questionSlice.reducer;
+export const selectQuestionName = (state) => state.question.questionName;
+export const selectQuestionId = (state) => state.question.questionId;
+export default questionSlice.reducer;

@@ -1,19 +1,19 @@
-import React from 'react';
-import "../css/Quora.css";
-import Feed from './Feed';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import Widget from './Widget';
+import React from "react";
+import "../Css/Quora.css";
+import Feed from "./Feed";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import Widget from "./Widget";
 
-const Quora = () => {
+
+function Quora() {
   return (
-    <div className='quora'>
-     
+    <div className="quora">
       <Navbar />
-      <div className="quora_content">
+      <div className="quora__content">
         <Sidebar />
         <Feed />
-        <Widget />
+        <Widget/>
       </div>
     </div>
   );
